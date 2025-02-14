@@ -2,6 +2,7 @@
 % Izzy, Evan, and Gabe
 % Advisors: Dr. Ching and Dr. Trobaugh
 %THIS CONTROLLER STABILIZES TO WHATEVER EQUILIBRIUM POINT WE SET
+% i.e., regulator
 
 % System parameters
 m = 0.00831;  % mass of the ball (kg)
