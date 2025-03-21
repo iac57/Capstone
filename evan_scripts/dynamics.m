@@ -112,7 +112,7 @@ Kt = Kp + Ki/s + Kd*s; % controller
 
 A = [0    1;
      a_21 0];
-B = [0; b_2];
+B = [0; -b_2];
 C = [1 0];
 D = 0;
 
