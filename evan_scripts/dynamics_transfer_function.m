@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MagLev DYNAMICS SIMLUATION
+%% MagLev STATE SPACE DYNAMICS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evan Sharafuddin, Izzy Collins, Gabe Garcia
-% 3/19/2025
+% 3/21/2025
 
 %%% define model parameters
 % electromechanical constant
