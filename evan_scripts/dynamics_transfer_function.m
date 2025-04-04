@@ -60,33 +60,33 @@ t = 0:0.001:0.5;
 figure, lsim(cl, 0.1*ones(size(t)), t)
 
 
-% add integrator for finite steady state error
-
-sys_tf = sys_tf / s;
-
-figure, rlocus(sys_tf)
-
-Kk = 50;
-
-cl = minreal(Kk*sys_tf / (1+Kk*sys_tf));
-t = 0:0.001:0.5;
-figure, lsim(cl, 0.1*ones(size(t)), t)
+% % add integrator for finite steady state error
+% 
+% sys_tf = sys_tf / s;
+% 
+% figure, rlocus(sys_tf)
+% 
+% Kk = 50;
+% 
+% cl = minreal(Kk*sys_tf / (1+Kk*sys_tf));
+% t = 0:0.001:0.5;
+% figure, lsim(cl, 0.1*ones(size(t)), t)
 
 
 %%
 % add lead compensator
-p0 = -700; 
+p0 = -1000; 
 z0 = -100;
 comp_tf = (s-z0) / (s-p0)
 
-figure, rlocus(sys_tf*comp_tf);
+figure, rlocus(1/s*sys_tf*comp_tf);
 
 
 
 % simulate with compensator
-Kk = 5e3; 
+Kk = 7.5e3; 
 
-tf_final = Kk*sys_tf*comp_tf;
+tf_final = 1/s*Kk*sys_tf*comp_tf;
 cl = minreal(tf_final / (1 + tf_final));
 
 t = 0:0.001:0.5;
