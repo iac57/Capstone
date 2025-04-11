@@ -2,6 +2,9 @@
 % trying to successfully implement lead compensator
 % https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5570565
 
+% Good resource for discrete time control systems
+% https://idsc.ethz.ch/content/dam/ethz/special-interest/mavt/dynamic-systems-n-control/idsc-dam/Lectures/Digital-Control-Systems/Slides_DigReg_2013.pdf
+
 clear, clc, close all
 
 %%% define model parameters
@@ -28,9 +31,18 @@ P2 = ( b ) / ( s^2 - a );
 G = (( s + 40 ) / ( s + 400 )); % Wong 1986
 figure, rlocus(G*P1*P2)
 
-
-k = 6.5e3;
+k = 7e3;
 
 figure, nyquist(k*G*P1*P2)
 figure, step( feedback(P1*P2*G*k, 1) )
+
+%%% convert to state space for initial condition testing
+sys_ol = k*G*P1*P2;
+sys_cl = minreal( sys_ol / (1 + sys_ol) );
+[A, B, C, D] = tf2ss( sys_ol.Numerator{1}, sys_ol.Denominator{1} );
+
+%%% change controller to discrete time
+Ts = 1e-3; % typical loop/sampling frequency -- TODO experiment with different values of this
+sys_d = c2d(G, Ts)
+
 
