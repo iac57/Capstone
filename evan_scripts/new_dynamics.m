@@ -10,7 +10,7 @@ clear, clc, close all
 %%% define model parameters
 K = 9.7091e-06; % [N-A^2/m^2], electromechanical constant
 m = 0.006;  % [kg]        
-x0 = 8 * 1e-3; % [mm] -> [m], commanded equilibrium position of ball
+x0 = 5 * 1e-3; % [mm] -> [m], commanded equilibrium position of ball
 g = 9.81; % [m/s^2]
 L = 0.14485; % H
 R = 8; % Ohm
@@ -42,7 +42,7 @@ sys_cl = minreal( sys_ol / (1 + sys_ol) );
 [A, B, C, D] = tf2ss( sys_ol.Numerator{1}, sys_ol.Denominator{1} );
 
 %%% change controller to discrete time
-Ts = 1e-3; % typical loop/sampling frequency -- TODO experiment with different values of this
+Ts = 5e-4; % typical loop/sampling frequency -- TODO experiment with different values of this
 sys_d = c2d(G, Ts)
 
 
