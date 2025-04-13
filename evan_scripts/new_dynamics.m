@@ -7,10 +7,13 @@
 
 clear, clc, close all
 
+% flags
+F_PRINT_FIGS = 0;
+
 %%% define model parameters
 K = 9.7091e-06; % [N-A^2/m^2], electromechanical constant
 m = 0.006;  % [kg]        
-x0 = 5 * 1e-3; % [mm] -> [m], commanded equilibrium position of ball
+x0 = 8 * 1e-3; % [mm] -> [m], commanded equilibrium position of ball
 g = 9.81; % [m/s^2]
 L = 0.14485; % H
 R = 8; % Ohm
@@ -25,24 +28,31 @@ b = 2*K*i0 / ( m*x0^2 ); % TODO need to bookkeep a negative somewhere.
 
 %%% write out Laplace transforms
 s = tf('s');
-P1 = ( 1/L ) / ( s + R/L );
+P1 = ( 1 ) / ( L*s + R );
 P2 = ( b ) / ( s^2 - a );
 
 G = (( s + 40 ) / ( s + 400 )); % Wong 1986
-figure, rlocus(G*P1*P2)
+
+if F_PRINT_FIGS
+    figure, rlocus(G*P1*P2)
+end
 
 k = 7e3;
 
-figure, nyquist(k*G*P1*P2)
-figure, step( feedback(P1*P2*G*k, 1) )
+if F_PRINT_FIGS
+    figure, nyquist(k*G*P1*P2)
+    figure, step( feedback(P1*P2*G*k, 1) )
+end
 
-%%% convert to state space for initial condition testing
-sys_ol = k*G*P1*P2;
-sys_cl = minreal( sys_ol / (1 + sys_ol) );
-[A, B, C, D] = tf2ss( sys_ol.Numerator{1}, sys_ol.Denominator{1} );
+%%% Determine saturation limits
+v0 = i0*R;
+V_MAX = 20;
+vmin = -v0;
+vmax = V_MAX - v0;
+
 
 %%% change controller to discrete time
 Ts = 5e-4; % typical loop/sampling frequency -- TODO experiment with different values of this
-sys_d = c2d(G, Ts)
+sys_d = c2d(G, Ts);
 
 
