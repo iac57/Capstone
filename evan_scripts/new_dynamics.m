@@ -8,7 +8,7 @@
 clear, clc, close all
 
 % flags
-F_PRINT_FIGS = 0;
+F_PRINT_FIGS = 1;
 
 %%% define model parameters
 K = 9.7091e-06; % [N-A^2/m^2], electromechanical constant
@@ -34,6 +34,7 @@ P2 = ( b ) / ( s^2 - a );
 G = (( s + 40 ) / ( s + 400 )); % Wong 1986
 
 if F_PRINT_FIGS
+    figure, rlocus(P1*P2)
     figure, rlocus(G*P1*P2)
 end
 
